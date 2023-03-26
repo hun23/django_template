@@ -1,0 +1,31 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+  <h1>DETAIL</h1>
+  <hr />
+
+  {% if page.image %}
+    <img src="{{page.image.url}}" />
+  {% endif %}
+
+  <div id="page-content">
+    {% if page.thumbnail != "" %}
+      <img width="120px" src="{{page.thumbnail.url}}" alt="">
+    {% else %}
+      <p>NO THUMBNAIL</p>
+    {% endif %}
+    <p>글 제목 : {{page.title}}</p>
+    <p>글 내용 : {{page.content}}</p>
+    <p>생성시각 : {{page.created_at}}</p>
+    <p>수정시각 : {{page.updated_at}}</p>
+
+    <hr>
+    <a href="{% url 'my_app:update' page.pk %}">수정하기</a>
+    <form action="{% url 'my_app:delete' page.pk %}" id="delete-form">
+      {% csrf_token %}
+      <input type="submit" value="삭제하기" id="delete-btn" />
+    </form><br>
+    <hr>
+    <a href="{% url 'my_app:index' %}">목록보기</a>
+  </div>
+{% endblock content %}
